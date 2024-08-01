@@ -1,0 +1,42 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+!default.xcworkspace/contents.xcworkspacedata
+!default.xcworkspace/contents.xcworkspacedata/Contents.json
+!default.xcworkspace/contents.xcworkspacedata/0_*.pbxproj
+
+# Xcode project files
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+
+# Swift Package Manager
+Packages
+/.build
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Code Injection by AppCode
+.idea/
+
+# SwiftPM
+.build/
+
+# Dependency manager
+.car
+.DS_Store
+
+# Firebase
+GoogleService-Info.plist
