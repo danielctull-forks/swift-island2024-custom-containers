@@ -19,11 +19,15 @@ struct DuoColorsApp: App {
 
     static let initialColors = {
         var result = [ColorModel]()
-        for i in 1...10 {
+
+        let steps = 10
+        let stepSize = 1.0 / Double(steps - 1)
+
+        for i in 1...steps {
             result.append(
                 ColorModel(
                     id: i,
-                    color: Color.red.mix(with: .blue, by: 1/Double(i)),
+                    color: Color.red.mix(with: .blue, by: Double(i) * stepSize),
                     hint: false
                 )
             )

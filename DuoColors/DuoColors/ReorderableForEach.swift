@@ -74,7 +74,7 @@ struct ReorderableForEach<Content: View, Item: EmptyIdentifiable & Equatable>: V
 
     var body: some View {
         ForEach(items) { item in
-            ItemRow(
+            ItemView(
                 offsetY: offsetY(for: item),
                 position: draggingItem == item ? dragLocation ?? defaultPosition : defaultPosition,
                 isDragging: draggingItem == item
@@ -86,7 +86,7 @@ struct ReorderableForEach<Content: View, Item: EmptyIdentifiable & Equatable>: V
     }
 }
 
-struct ItemRow<Content: View>: View {
+struct ItemView<Content: View>: View {
     let content: Content
     let offsetY: CGFloat
     let position: CGPoint
