@@ -9,16 +9,11 @@ import SwiftUI
 
 extension ContainerValues {
     @Entry var colorHint: String?
-    @Entry var isCorrect: Bool = false
 }
 
 extension View {
     func colorHint(_ value: Int?) -> some View {
         containerValue(\.colorHint, value.map(String.init))
-    }
-
-    func isCorrect(_ value: Bool) -> some View {
-        containerValue(\.isCorrect, value)
     }
 }
 
@@ -40,12 +35,6 @@ struct ColorsList<Content: View>: View {
                         if let hint = item.containerValues.colorHint {
                             Text(hint)
                                 .allowsHitTesting(false)
-                        }
-                    }
-                    .overlay(alignment: .bottomTrailing) {
-                        if item.containerValues.isCorrect && easyMode {
-                            Image(systemName: "checkmark")
-                                .padding(6)
                         }
                     }
             }

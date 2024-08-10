@@ -9,16 +9,6 @@ import SwiftUI
 
 @main
 struct QuadColorsApp: App {
-    struct ColorModel: EmptyIdentifiable, Equatable {
-        var id: Int { column * 10 + order }
-        let column: Int
-        let order: Int
-        let color: Color
-        var hint: Bool
-
-        static var emptyId: Int { 0 }
-    }
-
     static let initialColors = {
         var result = [[ColorModel]]()
 
@@ -56,32 +46,25 @@ struct QuadColorsApp: App {
     @ViewBuilder
     var body: some Scene {
         WindowGroup {
-            VStack {
-                content
-            }
-        }
-    }
-
-    func isCorrect(_ item: ColorModel) -> Bool {
-        return colors[item.column].firstIndex(of: item)! + 1 == item.order
-    }
-
-    func sectionContent(at index: Int) -> some View {
-        ReorderableForEach(items: colors[index], itemHeight: 60) { item in
-            item.color
-                .colorHint(item.hint ? item.id : nil)
-        } moveAction: { from, to in
-            colors[index].move(fromOffsets: .init(integer: from), toOffset: to)
-        }
-    }
-
-    var content: some View {
-        ColorsList {
-            ForEach(colors.indices, id: \.self) { index in
-                Section {
-                    sectionContent(at: index)
+            ContentView(colors: $colors)
+                .onAppear {
+                    updateColors()
                 }
-            }
+                .sheet(isPresented: $didWin) {
+                    Text("Amazing! 🎉")
+                        .font(.largeTitle)
+                    Button {
+                        didWin = false
+                    } label: {
+                        Text("Play Again")
+                            .bold()
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background {
+                                Color.accentColor.clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                    }
+                }
         }
         .onChange(of: colors) { oldValue, newValue in
             guard oldValue != newValue else { return }
@@ -105,24 +88,6 @@ struct QuadColorsApp: App {
             guard oldValue != newValue else { return }
             if !newValue {
                 updateColors()
-            }
-        }
-        .onAppear {
-            updateColors()
-        }
-        .sheet(isPresented: $didWin) {
-            Text("Amazing! 🎉")
-                .font(.largeTitle)
-            Button {
-                didWin = false
-            } label: {
-                Text("Play Again")
-                    .bold()
-                    .foregroundStyle(Color.white)
-                    .padding()
-                    .background {
-                        Color.accentColor.clipShape(RoundedRectangle(cornerRadius: 4))
-                    }
             }
         }
     }
