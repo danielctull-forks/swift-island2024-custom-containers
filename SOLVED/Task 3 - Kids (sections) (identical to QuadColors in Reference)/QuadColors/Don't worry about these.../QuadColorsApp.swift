@@ -25,8 +25,7 @@ struct QuadColorsApp: App {
                     ColorModel(
                         column: i,
                         order: j,
-                        color: top.mix(with: bottom, by: Double(j) * stepSize ),
-                        hint: false
+                        color: top.mix(with: bottom, by: Double(j) * stepSize )
                     )
                 )
             }

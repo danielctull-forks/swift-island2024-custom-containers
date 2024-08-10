@@ -29,7 +29,6 @@ struct ContentView: View {
     func sectionContent(at index: Int) -> some View {
         ReorderableForEach(items: colors[index], itemHeight: 60) { item in
             item.color
-                .colorHint(item.hint ? item.id : nil)
         } moveAction: { from, to in
             colors[index].move(fromOffsets: .init(integer: from), toOffset: to)
         }

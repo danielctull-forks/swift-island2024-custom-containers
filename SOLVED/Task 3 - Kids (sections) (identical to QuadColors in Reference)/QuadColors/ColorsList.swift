@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-extension ContainerValues {
-    @Entry var colorHint: String?
-}
-
-extension View {
-    func colorHint(_ value: Int?) -> some View {
-        containerValue(\.colorHint, value.map(String.init))
-    }
-}
-
 struct ColorsList<Content: View>: View {
     let easyMode: Bool
     let content: Content
@@ -31,12 +21,6 @@ struct ColorsList<Content: View>: View {
             ForEach(subviews: section.content) { item in
                 item
                     .frame(width: 60, height: 60)
-                    .overlay {
-                        if let hint = item.containerValues.colorHint {
-                            Text(hint)
-                                .allowsHitTesting(false)
-                        }
-                    }
             }
         }
     }

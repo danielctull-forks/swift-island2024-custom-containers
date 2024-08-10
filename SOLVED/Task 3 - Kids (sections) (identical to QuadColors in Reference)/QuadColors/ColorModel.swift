@@ -12,7 +12,6 @@ struct ColorModel: EmptyIdentifiable, Equatable {
     let column: Int
     let order: Int
     let color: Color
-    var hint: Bool
 
     static var emptyId: Int { 0 }
 }
