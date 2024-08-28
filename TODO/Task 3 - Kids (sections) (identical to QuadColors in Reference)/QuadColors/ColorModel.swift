@@ -18,15 +18,20 @@ struct ColorModel: EmptyIdentifiable, Equatable {
 
 extension [[ColorModel]] {
 
-    static func random() -> Self {
+    static func random(
+        topLeft: Color,
+        topRight: Color,
+        bottomLeft: Color,
+        bottomRight: Color
+    ) -> Self {
         var result = [[ColorModel]]()
 
         let steps = 5
         let stepSize = 1.0 / Double(steps - 1)
 
         for i in 0..<steps {
-            let top = Color.red.mix(with: .blue, by: Double(i) * stepSize)
-            let bottom = Color.green.mix(with: .yellow, by: Double(i) * stepSize)
+            let top = topLeft.mix(with: topRight, by: Double(i) * stepSize)
+            let bottom = bottomLeft.mix(with: bottomRight, by: Double(i) * stepSize)
 
             var row = [ColorModel]()
             for j in 0..<steps {

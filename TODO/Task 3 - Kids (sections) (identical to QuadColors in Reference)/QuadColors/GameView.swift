@@ -2,11 +2,22 @@ import SwiftUI
 
 struct Game: View {
     
-    //    let startingColors: StartingColors
-    
+    let startingColors: StartingColors
+
+    init(startingColors: StartingColors) {
+        self.startingColors = startingColors
+        self.initialColors = [[ColorModel]].random(
+            topLeft: startingColors.topLeft,
+            topRight: startingColors.topRight,
+            bottomLeft: startingColors.bottomLeft,
+            bottomRight: startingColors.bottomRight)
+        self.colors = colors
+        self.didWin = didWin
+    }
+
     @State private var colors: [[ColorModel]] = []
     
-    let initialColors = [[ColorModel]].random()
+    let initialColors: [[ColorModel]]
     
     @State private var didWin = false
     

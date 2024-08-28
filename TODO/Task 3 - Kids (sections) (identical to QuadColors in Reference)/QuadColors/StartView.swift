@@ -7,7 +7,11 @@ struct StartView: View {
 
     var body: some View {
         List(startingColors) { colors in
-            Cell(startingColors: colors)
+            NavigationLink {
+                Game(startingColors: colors)
+            } label: {
+                Cell(startingColors: colors)
+            }
         }
         .toolbar {
             Button("+") {
