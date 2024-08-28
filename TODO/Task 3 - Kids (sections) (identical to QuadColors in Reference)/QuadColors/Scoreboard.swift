@@ -4,6 +4,8 @@ struct Score: Identifiable, Codable {
     let id: String
     let name: String
     let time: TimeInterval
+
+    var duration: Duration { .seconds(time) }
 }
 
 struct Scoreboard: View {
@@ -16,9 +18,10 @@ struct Scoreboard: View {
 
     var body: some View {
         List(scores) { score in
-            HStack {
+            LabeledContent {
+                Text(score.duration, format: .time(pattern: .minuteSecond))
+            } label: {
                 Text(score.name)
-                Text("\(score.time)")
             }
         }
     }
