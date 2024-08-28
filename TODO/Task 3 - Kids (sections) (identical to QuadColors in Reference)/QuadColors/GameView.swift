@@ -1,10 +1,15 @@
 import SwiftUI
 
 struct Game: View {
-    
-    let startingColors: StartingColors
 
-    init(startingColors: StartingColors) {
+    private let startTime: Date
+    private let startingColors: StartingColors
+    private let initialColors: [[ColorModel]]
+    private let completion: (Score) -> Void
+
+    init(startingColors: StartingColors, completion: @escaping (Score) -> Void) {
+        self.startTime = Date()
+        self.completion = completion
         self.startingColors = startingColors
         self.initialColors = [[ColorModel]].random(
             topLeft: startingColors.topLeft,
@@ -16,12 +21,10 @@ struct Game: View {
     }
 
     @State private var colors: [[ColorModel]] = []
-    
-    let initialColors: [[ColorModel]]
-    
     @State private var didWin = false
-    
-    
+    @State private var name: String = ""
+    @State private var endTime = Date()
+
     func updateColors() {
         colors = initialColors.map { $0.shuffled() }
     }
@@ -32,19 +35,31 @@ struct Game: View {
                 updateColors()
             }
             .sheet(isPresented: $didWin) {
-                Text("Amazing! 🎉")
-                    .font(.largeTitle)
-                Button {
-                    didWin = false
-                } label: {
-                    Text("Play Again")
-                        .bold()
-                        .foregroundStyle(Color.white)
-                        .padding()
-                        .background {
-                            Color.accentColor.clipShape(RoundedRectangle(cornerRadius: 4))
-                        }
+                VStack {
+                    Text("Amazing! 🎉")
+                        .font(.largeTitle)
+
+                    TextField("Name", text: $name)
+
+                    Button {
+                        didWin = false
+                        let score = Score(
+                            id: UUID().uuidString,
+                            name: name,
+                            time: endTime.timeIntervalSince(startTime)
+                        )
+                        completion(score)
+                    } label: {
+                        Text("Submit Score")
+                            .bold()
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background {
+                                Color.accentColor.clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                    }
                 }
+                .padding()
             }
             .onChange(of: colors) { oldValue, newValue in
                 guard oldValue != newValue else { return }
@@ -63,6 +78,7 @@ struct Game: View {
                 }
                 
                 didWin = allInOrder || allInReverse
+                endTime = Date()
             }
             .onChange(of: didWin) { oldValue, newValue in
                 guard oldValue != newValue else { return }

@@ -3,12 +3,14 @@ import SwiftUI
 struct StartView: View {
 
     @Binding var startingColors: [StartingColors]
-    @State private var presented = false
+    @Binding var scores: [Score]
+    @State private var presentStartingColors = false
+    @State private var presentScores = false
 
     var body: some View {
         List(startingColors) { colors in
             NavigationLink {
-                Game(startingColors: colors)
+                Game(startingColors: colors) { scores.append($0) }
             } label: {
                 Cell(startingColors: colors)
                     .frame(height: 80)
@@ -16,12 +18,22 @@ struct StartView: View {
         }
         .toolbar {
             Button("Add", systemImage: "plus") {
-                presented = true
+                presentStartingColors = true
+            }
+
+            Button("Scores") {
+                presentScores = true
             }
         }
-        .sheet(isPresented: $presented) {
+        .sheet(isPresented: $presentStartingColors) {
             StartingColorsPicker { colors in
                 startingColors.append(colors)
+            }
+        }
+        .sheet(isPresented: $presentScores) {
+            NavigationStack {
+                Scoreboard(scores: scores)
+                    .navigationTitle("Scoreboard")
             }
         }
     }

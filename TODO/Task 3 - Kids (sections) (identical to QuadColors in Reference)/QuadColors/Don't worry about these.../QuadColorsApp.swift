@@ -14,11 +14,13 @@ struct QuadColorsApp: App {
         StartingColors(id: UUID().uuidString)
     ]
 
+    @State var scores: [Score] = []
+
     @ViewBuilder
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                StartView(startingColors: $startingColors)
+                StartView(startingColors: $startingColors, scores: $scores)
                     .navigationTitle("Starting colors")
                     .navigationBarTitleDisplayMode(.inline)
             }
