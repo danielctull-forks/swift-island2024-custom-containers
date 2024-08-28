@@ -3,10 +3,21 @@ import SwiftUI
 struct StartView: View {
 
     @Binding var startingColors: [StartingColors]
+    @State private var presented = false
 
     var body: some View {
         List(startingColors) { colors in
             Cell(startingColors: colors)
+        }
+        .toolbar {
+            Button("+") {
+                presented = true
+            }
+        }
+        .sheet(isPresented: $presented) {
+            StartingColorsPicker { colors in
+                startingColors.append(colors)
+            }
         }
     }
 

@@ -10,21 +10,33 @@ struct StartingColors: Identifiable {
 
 struct StartingColorsPicker: View {
 
-    @Binding var startingColors: StartingColors
+    @Environment(\.dismiss) private var dismiss
+    @State private var startingColors = StartingColors(id: UUID().uuidString)
+    let completion: (StartingColors) -> Void
 
     var body: some View {
         VStack {
-            HStack {
-                ColorPicker("Top Left", selection: $startingColors.topLeft)
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    ColorPicker("Top Left", selection: $startingColors.topLeft)
+                    Spacer()
+                    ColorPicker("Top Right", selection: $startingColors.topRight)
+                }
                 Spacer()
-                ColorPicker("Top Right", selection: $startingColors.topRight)
+                HStack(spacing: 0) {
+                    ColorPicker("Bottom Left", selection: $startingColors.bottomLeft)
+                    Spacer()
+                    ColorPicker("Bottom Right", selection: $startingColors.bottomRight)
+                }
             }
-            Spacer()
-            HStack {
-                ColorPicker("Bottom Left", selection: $startingColors.bottomLeft)
-                Spacer()
-                ColorPicker("Bottom Right", selection: $startingColors.bottomRight)
+            .frame(width: 100, height: 100)
+            .padding()
+
+            Button("Done") {
+                completion(startingColors)
+                dismiss()
             }
         }
+        .labelsHidden()
     }
 }

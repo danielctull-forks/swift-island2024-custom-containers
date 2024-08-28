@@ -15,7 +15,11 @@ struct QuadColorsApp: App {
     @ViewBuilder
     var body: some Scene {
         WindowGroup {
-            Game()
+            NavigationStack {
+                StartView(startingColors: $startingColors)
+                    .navigationTitle("Starting colors")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }
