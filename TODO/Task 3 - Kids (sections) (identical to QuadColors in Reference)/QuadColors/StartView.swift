@@ -11,6 +11,7 @@ struct StartView: View {
                 Game(startingColors: colors)
             } label: {
                 Cell(startingColors: colors)
+                    .frame(height: 80)
             }
         }
         .toolbar {
