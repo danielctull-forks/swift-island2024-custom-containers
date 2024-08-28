@@ -8,16 +8,23 @@
 import SwiftUI
 
 extension ContainerValues {
-    <#Add an optional hint entry#>
-
     @Entry var isCorrect: Bool = false
+    @Entry var hint: Int?
 }
 
 extension View {
-    <#If you want - add a function here to make it easier to set the hint for a view#>
 
     func isCorrect(_ value: Bool) -> some View {
         containerValue(\.isCorrect, value)
+    }
+
+    func hint(_ value: Int?) -> some View {
+        containerValue(\.hint, value)
+            .overlay {
+                if let value {
+                    Text("\(value)")
+                }
+            }
     }
 }
 
@@ -32,15 +39,12 @@ struct ColorsList<Content: View>: View {
 
     var stack: some View {
         VStack(spacing: 0) {
-            ForEach(subviews: content) { item in
-                item
+            ForEach(subviews: content) { subview in
+                subview
                     .frame(width: 60, height: 60)
-                    .overlay {
-                        <#If we have a color hint, show it as a text or some symbol...#>
-                        <#Tip: You might want to call .allowsHitTesting(false) here#>
-                    }
+                    .allowsHitTesting(subview.containerValues.hint == nil || !subview.containerValues.isCorrect)
                     .overlay(alignment: .bottomTrailing) {
-                        if <#Only show the checkmark if the item is correct AND we're in easy mode!#> {
+                        if subview.containerValues.hint == nil && subview.containerValues.isCorrect {
                             Image(systemName: "checkmark")
                                 .padding(6)
                         }

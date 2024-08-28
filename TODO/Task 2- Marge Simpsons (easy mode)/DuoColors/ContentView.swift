@@ -42,19 +42,25 @@ struct ContentView: View {
             /// - Set `isCorrect(true)`, and the color hint value
 
 
-            <#If easyMode, show ColorModel.initialColors.first! with the hint and isCorrect#>
+            if easyMode, let item = ColorModel.initialColors.first {
+                item.color
+                    .isCorrect(true)
+                    .hint(item.id)
+            }
 
             ReorderableForEach(items: colors, itemHeight: 60) { item in
                 item.color
                     .isCorrect(isCorrect(item))
-                    <#Pass the color hint if item.hint is true#>
-                    <#Tip: item.id is actually the value of the correct index for the item - so you probably want to pass that...#>
+                    .hint(item.hint ? item.id : nil)
             } moveAction: { from, to in
                 colors.move(fromOffsets: .init(integer: from), toOffset: to)
             }
 
-            <#If easyMode, show ColorModel.initialColors.last! with the hint and isCorrect#>
-
+            if easyMode, let item = ColorModel.initialColors.last {
+                item.color
+                    .isCorrect(true)
+                    .hint(item.id)
+            }
         }
     }
 

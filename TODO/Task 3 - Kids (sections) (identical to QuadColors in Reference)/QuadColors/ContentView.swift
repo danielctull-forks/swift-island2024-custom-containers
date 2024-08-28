@@ -17,7 +17,13 @@ struct ContentView: View {
     }
 
     var content: some View {
-        <#Create ColorsList, give it each row in colors as a section. Pass sectionContent() to row index to get a row#>
+        ColorsList {
+            ForEach(colors.indices, id: \.self) { index in
+                Section {
+                    sectionContent(at: index)
+                }
+            }
+        }
     }
 
     func sectionContent(at index: Int) -> some View {
