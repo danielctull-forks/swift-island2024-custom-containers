@@ -9,37 +9,15 @@ import SwiftUI
 
 @main
 struct QuadColorsApp: App {
-    static let initialColors = {
-        var result = [[ColorModel]]()
 
-        let steps = 5
-        let stepSize = 1.0 / Double(steps - 1)
-
-        for i in 0..<steps {
-            let top = Color.red.mix(with: .blue, by: Double(i) * stepSize)
-            let bottom = Color.green.mix(with: .yellow, by: Double(i) * stepSize)
-
-            var row = [ColorModel]()
-            for j in 0..<steps {
-                row.append(
-                    ColorModel(
-                        column: i,
-                        order: j,
-                        color: top.mix(with: bottom, by: Double(j) * stepSize )
-                    )
-                )
-            }
-            result.append(row)
-        }
-        return result
-    }()
+    let initialColors = [[ColorModel]].random()
 
     @State private var colors: [[ColorModel]] = []
 
     @State private var didWin = false
 
     func updateColors() {
-        colors = Self.initialColors.map{ $0.shuffled() }
+        colors = initialColors.map { $0.shuffled() }
     }
 
     @ViewBuilder
@@ -71,7 +49,7 @@ struct QuadColorsApp: App {
             var allInOrder = true
             var allInReverse = true
             for index in 0..<colors.count {
-                let initialIDs = Self.initialColors[index].map { $0.id }
+                let initialIDs = initialColors[index].map { $0.id }
                 let resultIDs = colors[index].map { $0.id }
                 if initialIDs != resultIDs {
                     allInOrder = false
