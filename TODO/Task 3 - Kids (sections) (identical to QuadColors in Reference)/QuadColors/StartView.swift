@@ -14,7 +14,7 @@ struct StartView: View {
             }
         }
         .toolbar {
-            Button("+") {
+            Button("Add", systemImage: "plus") {
                 presented = true
             }
         }
