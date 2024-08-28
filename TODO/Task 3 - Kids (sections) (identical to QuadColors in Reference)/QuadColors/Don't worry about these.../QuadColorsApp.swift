@@ -10,6 +10,8 @@ import SwiftUI
 @main
 struct QuadColorsApp: App {
 
+    @State var startingColors: [StartingColors] = []
+
     let initialColors = [[ColorModel]].random()
 
     @State private var colors: [[ColorModel]] = []

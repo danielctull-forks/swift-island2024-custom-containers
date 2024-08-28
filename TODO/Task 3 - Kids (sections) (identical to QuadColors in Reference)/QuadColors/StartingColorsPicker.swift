@@ -1,6 +1,7 @@
 import SwiftUI
 
-struct StartingColors {
+struct StartingColors: Identifiable {
+    let id: String
     var topLeft: Color = .red
     var topRight: Color = .blue
     var bottomLeft: Color = .green
