@@ -29,8 +29,32 @@ struct ContentView: View {
     func sectionContent(at index: Int) -> some View {
         ReorderableForEach(items: colors[index], itemHeight: 60) { item in
             item.color
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: radius(
+                            row: item.order,
+                            rowCount: colors[index].count,
+                            column: item.column,
+                            columnCount: colors.count,
+                            size: 60
+                        )
+                    )
+                )
         } moveAction: { from, to in
             colors[index].move(fromOffsets: .init(integer: from), toOffset: to)
         }
     }
+}
+
+func radius(
+    row: Int,
+    rowCount: Int,
+    column: Int,
+    columnCount: Int,
+    size: CGFloat
+) -> CGFloat {
+    let id = row + 1 + column + 1
+    let total = rowCount + columnCount
+    let value = CGFloat(id) / CGFloat(total)
+    return value * size / 2
 }

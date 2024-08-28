@@ -17,7 +17,7 @@ struct ColorsList<Content: View>: View {
     }
 
     func sectionContent(_ section: SectionConfiguration) -> some View {
-        VStack(spacing: 0) {
+        VStack {
             ForEach(subviews: section.content) { subview in
                 subview.frame(width: 60, height: 60)
             }
@@ -25,7 +25,7 @@ struct ColorsList<Content: View>: View {
     }
 
     var body: some View {
-        HStack(spacing: 0) {
+        HStack {
             ForEach(sections: content) { section in
                 sectionContent(section)
             }
