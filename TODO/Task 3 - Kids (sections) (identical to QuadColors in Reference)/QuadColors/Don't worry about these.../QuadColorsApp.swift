@@ -13,14 +13,23 @@ struct QuadColorsApp: App {
     @State var startingColors: [StartingColors] = [
         StartingColors(id: UUID().uuidString)
     ]
+    @AppStorage("string") var test: String = ""
 
-    @State var scores: [Score] = []
+    @AppStorage("scores") var scoreData: Data = Data()
+
+    private var scores: Binding<[Score]> {
+        Binding {
+            (try? JSONDecoder().decode([Score].self, from: scoreData)) ?? []
+        } set: { scores in
+            scoreData = try! JSONEncoder().encode(scores)
+        }
+    }
 
     @ViewBuilder
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                StartView(startingColors: $startingColors, scores: $scores)
+                StartView(startingColors: $startingColors, scores: scores)
                     .navigationTitle("Starting colors")
                     .navigationBarTitleDisplayMode(.inline)
             }

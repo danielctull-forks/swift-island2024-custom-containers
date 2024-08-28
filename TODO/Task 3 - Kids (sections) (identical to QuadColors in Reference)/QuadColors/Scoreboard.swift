@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Score: Identifiable {
+struct Score: Identifiable, Codable {
     let id: String
     let name: String
     let time: TimeInterval
@@ -9,7 +9,7 @@ struct Score: Identifiable {
 struct Scoreboard: View {
 
     init(scores: [Score]) {
-        self.scores = scores.sorted(by: { $0.time > $1.time })
+        self.scores = scores.sorted(by: { $0.time < $1.time })
     }
 
     let scores: [Score]
