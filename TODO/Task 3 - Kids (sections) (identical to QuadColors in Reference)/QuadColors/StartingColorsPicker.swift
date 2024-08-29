@@ -8,6 +8,26 @@ struct StartingColors: Identifiable {
     var bottomRight: Color = .yellow
 }
 
+extension StartingColors {
+    static var random: StartingColors {
+        StartingColors(
+            id: UUID().uuidString,
+            topLeft: .random,
+            topRight: .random,
+            bottomLeft: .random,
+            bottomRight: .random)
+    }
+}
+extension Color {
+    static var random: Color {
+        Color(
+            red: Double.random(in: 0...1),
+            green: Double.random(in: 0...1),
+            blue: Double.random(in: 0...1)
+        )
+    }
+}
+
 struct StartingColorsPicker: View {
 
     @Environment(\.dismiss) private var dismiss

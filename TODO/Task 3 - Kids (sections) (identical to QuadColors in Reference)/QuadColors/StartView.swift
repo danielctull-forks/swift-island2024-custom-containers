@@ -17,6 +17,11 @@ struct StartView: View {
             }
         }
         .toolbar {
+
+            Button("Random") {
+                startingColors.append(.random)
+            }
+
             Button("Add", systemImage: "plus") {
                 presentStartingColors = true
             }
